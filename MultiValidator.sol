@@ -15,3 +15,24 @@ contract MultiValidator is AccountValidator {
             owners[addr] = true;
     }
 }
+
+contract DataExternalValidation {
+
+    uint public data;
+
+    AccountValidator _validator;
+
+    function DataExternalValidation(address validator) {
+        _validator = AccountValidator(validator);
+    }
+
+    function addData(uint data_) {
+        if(_validator.validate(msg.sender))
+            data = data_;
+    }
+
+    function setValidator(address validator) {
+        if(_validator.validate(msg.sender))
+            _validator = AccountValidator(validator);
+    }
+}
